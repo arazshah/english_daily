@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .glass-card {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .glass-card h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    .glass-card input {
+      width: 100%;
+      padding: 10px 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      color: #333;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    .glass-card input::placeholder {
+      color: #999;
+    }
+    .glass-card button {
+      width: 100%;
+      padding: 10px 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #007bff;
+      background: #007bff;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .glass-card button:hover {
+      background: #0056b3;
+    }
+    .glass-card p {
+      color: #555;
+      margin-top: 10px;
+    }
+    .glass-card a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .glass-card a:hover {
+      text-decoration: underline;
+    }
+    .error-message {
+      color: #ff0000;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-card">
+    <h2>Register</h2>
+    {% if error %}
+      <p class="error-message">{{ error }}</p>
+    {% endif %}
+    <form method="POST">
+      <input type="text" name="full_name" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+  </div>
+</body>
+</html>

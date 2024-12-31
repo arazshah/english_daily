@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Training Section</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+ <style>
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding: 10px 0;
+    }
+    .image-grid {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+    .image-grid img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      padding: 5px;
+    }
+    .video-container, .audio-container {
+      margin: 20px 0;
+      text-align: center;
+      padding: 10px;
+    }
+    .video-container video, .audio-container audio {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      padding: 5px;
+    }
+    .text-center {
+      text-align: center;
+      padding: 10px;
+    }
+    .btn {
+      padding: 10px 20px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn-primary {
+      background: #007bff;
+    }
+    .btn-primary:hover {
+      background: #0056b3;
+    }
+    .btn-secondary {
+      background: #6c757d;
+    }
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+    .btn-success {
+      background: #28a745;
+    }
+    .btn-success:hover {
+      background: #218838;
+    }
+    .glass-card {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .home-icon {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #007bff;
+      font-size: 24px;
+      text-decoration: none;
+    }
+    .home-icon:hover {
+      color: #0056b3;
+    }
+    .current-date {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #555;
+      font-size: 14px;
+    }
+    .tts-icon {
+      margin-left: 10px;
+      color: #007bff;
+      cursor: pointer;
+    }
+    .tts-icon:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-card">
+    <!-- Home Icon (Back to Dashboard) -->
+    <a href="{{ url_for('dashboard') }}" class="home-icon">
+      <i class="fas fa-home"></i>
+    </a>
+
+    <!-- Current Date -->
+    <div class="current-date" id="currentDate"></div>
+
+    <!-- Card Title -->
+    <h2>Training Section</h2>
+
+    <!-- Step 1: Display the Word -->
+    <div id="step1" class="step active">
+      <div class="text-center">
+        <h3>{{ word.word }} <i class="fas fa-play tts-icon" onclick="speakText('{{ word.word }}')"></i></h3>
+      </div>
+    </div>
+
+    <!-- Step 2: Display 4 Related Images -->
+    <div id="step2" class="step">
+      <div class="image-grid">
+        <img src="{{ word.image1 }}" alt="Image 1">
+        <img src="{{ word.image2 }}" alt="Image 2">
+        <img src="{{ word.image3 }}" alt="Image 3">
+        <img src="{{ word.image4 }}" alt="Image 4">
+      </div>
+    </div>
+
+    <!-- Step 3: Display 3 Example Sentences -->
+    <div id="step3" class="step">
+      <div class="text-center">
+        <p>{{ word.sentence1 }} <i class="fas fa-play tts-icon" onclick="speakText('{{ word.sentence1 }}')"></i></p>
+        <p>{{ word.sentence2 }} <i class="fas fa-play tts-icon" onclick="speakText('{{ word.sentence2 }}')"></i></p>
+        <p>{{ word.sentence3 }} <i class="fas fa-play tts-icon" onclick="speakText('{{ word.sentence3 }}')"></i></p>
+      </div>
+    </div>
+
+    <!-- Step 4: Display Context of the Word -->
+    <div id="step4" class="step">
+      <div class="text-center">
+        <p>{{ word.context }} <i class="fas fa-play tts-icon" onclick="speakText('{{ word.context }}')"></i></p>
+      </div>
+    </div>
+
+    <!-- Step 5: Display Audio Sample -->
+    <div id="step5" class="step">
+      <div class="audio-container">
+        <audio controls>
+          <source src="{{ word.audio }}" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+
+    <!-- Step 6: Display Video Sample -->
+    <div id="step6" class="step">
+      <div class="video-container">
+        <video controls>
+          <source src="{{ word.video }}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="text-center">
+        <a href="{{ url_for('evaluation') }}" class="btn btn-success">
+          <i class="fas fa-arrow-right"></i> Go to Evaluation
+        </a>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+      <button class="btn btn-secondary" id="prevBtn">
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      <button class="btn btn-primary" id="nextBtn">
+        Next <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 6;
+
+    function showStep(step) {
+      document.querySelectorAll('.step').forEach((el) => el.classList.remove('active'));
+      document.getElementById(`step${step}`).classList.add('active');
+      document.getElementById('prevBtn').style.display = step === 1 ? 'none' : 'block';
+      document.getElementById('nextBtn').style.display = step === totalSteps ? 'none' : 'block';
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+
+    // Initialize
+    showStep(currentStep);
+
+    // Text-to-Speech Function
+    function speakText(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Display Current Date
+    const currentDateElement = document.getElementById('currentDate');
+    const currentDate = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    currentDateElement.textContent = currentDate.toLocaleDateString('en-US', options);
+  </script>
+</body>
+</html>

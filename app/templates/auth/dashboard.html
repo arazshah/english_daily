@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .glass-card {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .dashboard-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 0 20px; /* Add padding to align buttons with the card edges */
+    }
+    .dashboard-buttons .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      font-size: 16px;
+      text-decoration: none;
+      width: 100%; /* Ensure buttons take full width */
+      box-sizing: border-box; /* Include padding in width calculation */
+    }
+    .dashboard-buttons .btn i {
+      font-size: 18px;
+    }
+    h2 {
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #555;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-card">
+    <h2>Welcome, {{ user.username }}!</h2>
+    <p>Your current score: {{ user.score }}/100</p>
+
+    <!-- Buttons with Icons -->
+    <div class="dashboard-buttons">
+      <a href="{{ url_for('training') }}" class="btn">
+        <i class="fas fa-book"></i> Start Training
+      </a>
+      <a href="{{ url_for('evaluation') }}" class="btn">
+        <i class="fas fa-clipboard-check"></i> Take Evaluation
+      </a>
+      <a href="{{ url_for('logout') }}" class="btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </div>
+</body>
+</html>

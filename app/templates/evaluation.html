@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluation Section</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding: 10px 0;
+    }
+    .image-grid {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+    .image-grid img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      padding: 5px;
+    }
+    .video-container, .audio-container {
+      margin: 20px 0;
+      text-align: center;
+      padding: 10px;
+    }
+    .video-container video, .audio-container audio {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      padding: 5px;
+    }
+    .essay-box {
+      width: 100%;
+      height: 150px;
+      padding: 15px 20px 15px 15px; /* Added padding-right */
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      color: #333;
+      margin: 10px 0;
+      box-sizing: border-box; /* Include padding in width calculation */
+    }
+    .essay-box::placeholder {
+      color: #999;
+    }
+    .text-center {
+      text-align: center;
+      padding: 10px;
+    }
+    .record-button, .btn {
+      padding: 10px 20px;
+      margin: 10px 0;
+    }
+    .form-control {
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .glass-card {
+      padding: 20px;
+    }
+    .submit-button {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="glass-card">
+    <h2>Evaluation Section</h2>
+
+    <!-- Step 1: 3 Sentences with Blank Spaces -->
+    <div id="step1" class="step active">
+      <div class="text-center">
+        <p>Sentence 1 with a ______ space for user to fill.</p>
+        <p>Sentence 2 with a ______ space for user to fill.</p>
+        <p>Sentence 3 with a ______ space for user to fill.</p>
+      </div>
+    </div>
+
+    <!-- Step 2: Sentence for Shadowing Practice -->
+    <div id="step2" class="step">
+      <div class="text-center">
+        <p>Sentence for shadowing practice.</p>
+        <button class="btn record-button">
+          <i class="fas fa-microphone"></i> Record
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3: Play 15s Sound and Input Textbox -->
+    <div id="step3" class="step">
+      <div class="text-center">
+        <button class="btn">
+          <i class="fas fa-volume-up"></i> Play 15s Sound
+        </button>
+        <input type="text" class="form-control mt-2" placeholder="Write what you hear">
+      </div>
+    </div>
+
+    <!-- Step 4: Short Video and Input Textbox -->
+    <div id="step4" class="step">
+      <div class="video-container">
+        <video controls>
+          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <input type="text" class="form-control mt-2" placeholder="Write what you watch and understand">
+      </div>
+    </div>
+
+    <!-- Step 5: Record Video via Webcam -->
+    <div id="step5" class="step">
+      <div class="text-center">
+        <button class="btn">
+          <i class="fas fa-video"></i> Record Video via Webcam
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 6: Writing Essay -->
+    <div id="step6" class="step">
+      <div class="text-center">
+        <textarea class="essay-box" placeholder="Write an essay related to the word"></textarea>
+        <button class="btn submit-button">
+          <i class="fas fa-check"></i> Submit Evaluation
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+      <button class="btn" id="prevBtn">
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      <button class="btn" id="nextBtn">
+        Next <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+
+    <!-- Back to Dashboard -->
+    <div class="text-center" style="margin-top: 20px;">
+      <a href="{{ url_for('dashboard') }}" class="btn">
+        <i class="fas fa-home"></i> Back to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 6;
+
+    function showStep(step) {
+      document.querySelectorAll('.step').forEach((el) => el.classList.remove('active'));
+      document.getElementById(`step${step}`).classList.add('active');
+      document.getElementById('prevBtn').style.display = step === 1 ? 'none' : 'block';
+      document.getElementById('nextBtn').style.display = step === totalSteps ? 'none' : 'block';
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+
+    // Initialize
+    showStep(currentStep);
+  </script>
+</body>
+</html>
